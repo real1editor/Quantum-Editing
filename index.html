@@ -151,8 +151,28 @@ nav.floating{ position:fixed; top:18px; right:12px; z-index:70; display:flex; ga
 
 /* Newsletter */
 .newsletter-holo{ text-align:center; background:var(--glass); border:1px solid var(--glass-border); border-radius:12px; padding:36px; max-width:760px; margin:0 auto }
-.newsletter-form{ display:flex; gap:12px; max-width:600px; margin:12px auto 0 }
-.newsletter-form .holo-input{ flex:1 }
+.newsletter-form {
+  display: flex;
+  flex-direction: column; /* stack input + button on mobile */
+  gap: 15px;
+  width: 100%;           /* take full width */
+  max-width: 100%;       /* no shrinking */
+}
+.holo-input input {
+  width: 100%;
+  padding: 16px 20px; /* bigger padding */
+  font-size: 1rem;    /* text not too tiny */
+}
+   @media (max-width: 768px) {
+  .newsletter-form {
+    flex-direction: column;
+    width: 100%;
+  }
+  .newsletter-form .holo-input,
+  .newsletter-form button {
+    width: 100%;
+  }
+   }
 
 /* Services / Testimonials etc. use holo-card */
 
