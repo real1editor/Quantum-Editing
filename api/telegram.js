@@ -13,20 +13,42 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Server misconfigured' });
     }
 
-    let text = `🌌 New 3045 Event — type: ${type}\nSource: ${payload.source || 'web'}\n\n`;
+    // Enhanced message formatting with emojis and better structure
+    let text = `🌌 *QUANTUM TRANSMISSION RECEIVED* 🌌\n`;
+    text += `⏰ ${new Date().toLocaleString()}\n`;
+    text += `📡 Type: ${type.toUpperCase()}\n`;
+    text += `🚀 Source: ${payload.source || 'web'}\n\n`;
+
     if (type === 'subscribe') {
-      text += `📧 Subscribe request: ${payload.email || '[no email]'}\n`;
+      text += `📧 *NEWSLETTER SUBSCRIPTION*\n`;
+      text += `├ Email: ${payload.email || '[no email]'}\n`;
+      text += `└ Status: 🟢 ACTIVE\n`;
     } else if (type === 'feedback') {
-      text += `👤 Name: ${payload.name || 'Anonymous'}\n💬 Message:\n${payload.message || '[empty]'}\n`;
+      text += `💬 *CLIENT FEEDBACK*\n`;
+      text += `├ Name: ${payload.name || 'Anonymous'}\n`;
+      text += `├ Message:\n`;
+      text += `└ ${payload.message || '[empty]'}\n`;
     } else { // project
-      text += `👤 Name: ${payload.name || 'Anonymous'}\n📧 Email: ${payload.email || '[no email]'}\n💡 Project:\n${payload.message || payload.project || '[empty]'}\n`;
+      text += `🎬 *PROJECT TRANSMISSION*\n`;
+      text += `├ Name: ${payload.name || 'Anonymous'}\n`;
+      text += `├ Email: ${payload.email || '[no email]'}\n`;
+      text += `├ Project Details:\n`;
+      text += `└ ${payload.message || payload.project || '[empty]'}\n`;
     }
+
+    text += `\n⚡ *REAL1EDITOR QUANTUM SYSTEM* ⚡`;
+    text += `\n📍 Neo-Addis | 3045 Era`;
 
     const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
     const resp = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: chatId, text })
+      body: JSON.stringify({ 
+        chat_id: chatId, 
+        text,
+        parse_mode: 'Markdown',
+        disable_notification: false
+      })
     });
 
     const json = await resp.json();
@@ -35,9 +57,16 @@ export default async function handler(req, res) {
       return res.status(502).json({ error: json.description || 'Telegram API error' });
     }
 
-    return res.status(200).json({ ok: true });
+    return res.status(200).json({ 
+      ok: true,
+      message: 'Quantum transmission successful!',
+      type: type
+    });
   } catch (err) {
     console.error('Server error', err);
-    return res.status(500).json({ error: err.message || 'Server error' });
+    return res.status(500).json({ 
+      error: 'Quantum interference detected. Transmission failed.',
+      details: err.message 
+    });
   }
 }
