@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Real1Editor | 3045 — Neo-Addis Quantum Portfolio</title>
+<title>Real1Editor | Neo-Addis Quantum Portfolio</title>
 
 <!-- Telegram WebApp SDK -->
 <script async src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -43,6 +43,177 @@ body{
   -moz-osx-font-smoothing:grayscale;
 }
 
+/* NEW: Animated Intro Section */
+#intro-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 9998;
+    background: var(--deep-space);
+    transition: opacity 1s ease, visibility 1s;
+}
+
+#intro-section.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.holographic-display {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.holo-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 243, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.3;
+}
+
+.main-title h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 900;
+    margin-bottom: 20px;
+    position: relative;
+    text-shadow: 0 0 30px var(--primary-holo);
+}
+
+.glitch-text {
+    position: relative;
+    color: var(--primary-holo);
+}
+
+.glitch-text::before,
+.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch-text::before {
+    animation: glitch-1 0.5s infinite linear alternate-reverse;
+    color: var(--accent-neon);
+    z-index: -1;
+}
+
+.glitch-text::after {
+    animation: glitch-2 0.5s infinite linear alternate-reverse;
+    color: var(--secondary-holo);
+    z-index: -2;
+}
+
+.title-sub {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(0.9rem, 3vw, 1.2rem);
+    letter-spacing: 3px;
+    color: var(--secondary-holo);
+    margin-bottom: 40px;
+}
+
+.ai-orb {
+    position: relative;
+    width: clamp(150px, 40vw, 200px);
+    height: clamp(150px, 40vw, 200px);
+    margin: 40px auto;
+}
+
+.orb-ring {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top: 2px solid var(--primary-holo);
+    border-right: 2px solid var(--secondary-holo);
+    animation: rotate 3s linear infinite;
+}
+
+.orb-glow {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--primary-holo) 0%, transparent 70%);
+    opacity: 0.3;
+    animation: pulse 2s infinite alternate;
+}
+
+.welcome-message p {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    margin-bottom: 30px;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    line-height: 1.6;
+    padding: 0 20px;
+}
+
+.pulse-cta {
+    position: relative;
+    cursor: pointer;
+}
+
+.cta-orb {
+    padding: 15px 30px;
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 30px;
+    font-family: 'Orbitron', monospace;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    color: var(--primary-holo);
+    font-weight: bold;
+}
+
+.cta-orb::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.cta-orb:hover::before {
+    left: 100%;
+}
+
+.cta-orb:hover {
+    border-color: var(--primary-holo);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+    transform: translateY(-3px);
+}
+
 /* Neural Loader / Begin Transmission */
 #neural-loader{
   position:fixed; inset:0; z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -77,7 +248,7 @@ html{ scroll-snap-type:y mandatory; scroll-behavior:smooth; }
 .holo-divider{ width:110px; height:3px; background: linear-gradient(90deg, transparent, var(--primary-holo), transparent); margin:0 auto 18px }
 
 /* NAV (compact; closer to edge) */
-nav.floating{ position:fixed; top:18px; right:12px; z-index:70; display:flex; gap:8px; flex-wrap:wrap; }
+nav.floating{ position:fixed; top:18px; right:12px; z-index:70; display:flex; gap:18px; flex-wrap:wrap; }
 .nav-pill{ padding:.6rem .9rem; border-radius:999px; border:1px solid var(--glass-border); background:linear-gradient(180deg,rgba(255,255,255,0.01), rgba(255,255,255,0.02)); color:var(--primary-holo); font-weight:700; cursor:pointer; backdrop-filter:blur(6px); transition:transform .14s ease, box-shadow .14s ease; }
 .nav-pill:hover{ transform:translateY(-6px); box-shadow:0 18px 50px rgba(0,243,255,0.06) }
 
@@ -151,29 +322,17 @@ nav.floating{ position:fixed; top:18px; right:12px; z-index:70; display:flex; ga
 
 /* Newsletter */
 .newsletter-holo{ text-align:center; background:var(--glass); border:1px solid var(--glass-border); border-radius:12px; padding:36px; max-width:760px; margin:0 auto }
-.newsletter-form {
-  display: flex;
-  flex-direction: column; /* stack input + button on mobile */
-  gap: 15px;
-  width: 100%;           /* take full width */
-  max-width: 100%;       /* no shrinking */
-}
-.holo-input input {
-  width: 100%;
-  padding: 16px 20px; /* bigger padding */
-  font-size: 1rem;    /* text not too tiny */
-}
-   @media (max-width: 768px) {
-  .newsletter-form {
-    flex-direction: column;
-    width: 100%;
-  }
-  .newsletter-form .holo-input,
-  .newsletter-form button {
-    width: 100%;
-  }
-   }
+.newsletter-form{ display:flex; gap:12px; max-width:600px; margin:12px auto 0 }
+.newsletter-form .holo-input{ flex:1 }
 
+/* Ensure button matches input height */
+.newsletter-form .transmit-btn {
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+    
 /* Services / Testimonials etc. use holo-card */
 
 /* Quantum background grid + stars */
@@ -202,6 +361,26 @@ nav.floating{ position:fixed; top:18px; right:12px; z-index:70; display:flex; ga
 </style>
 </head>
 <body>
+<!-- NEW: Animated Intro Section -->
+<section id="intro-section">
+    <div class="holographic-display">
+        <div class="holo-grid"></div>
+        <div class="main-title">
+            <h1 class="glitch-text" data-text="REAL1EDITOR">REAL1EDITOR</h1>
+            <div class="title-sub">QUANTUM VIDEO EDITING SOLUTIONS</div>
+        </div>
+        <div class="ai-orb">
+            <div class="orb-ring"></div>
+            <div class="orb-glow"></div>
+        </div>
+        <div class="welcome-message">
+            <p>Welcome to the future of visual storytelling. I transform raw footage into cinematic experiences that transcend time and space.</p>
+            <div class="pulse-cta" onclick="hideIntro()">
+                <div class="cta-orb">BEGIN TRANSMISSION</div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- Neural loader / Begin Transmission -->
 <div id="neural-loader" role="alert" aria-live="polite">
@@ -209,7 +388,7 @@ nav.floating{ position:fixed; top:18px; right:12px; z-index:70; display:flex; ga
   <div class="quantum-dots" aria-hidden="true">
     <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
   </div>
-  <div class="loading-text">BEGIN TRANSMISSION — Real1Editor | 3045</div>
+  <div class="loading-text"> REAL1EDITOR </div>
 </div>
 
 <!-- Quantum background layers -->
@@ -248,16 +427,16 @@ nav.floating{ position:fixed; top:18px; right:12px; z-index:70; display:flex; ga
     <div class="container">
       <div class="holo-card" role="region" aria-labelledby="heroTitle">
         <div class="section-header">
-          <h2 id="heroTitle" class="glitch-text" data-text="Real1Editor | 3045 Quantum Video Editing">Real1Editor | 3045 Quantum Video Editing</h2>
+          <h2 id="heroTitle" class="glitch-text" data-text="Real1Editor | Quantum Video Editing">Real1Editor | Quantum Video Editing</h2>
           <div class="holo-divider"></div>
         </div>
         <div style="text-align:center;">
           <p style="color:rgba(255,255,255,0.85);max-width:820px;margin:0 auto 18px;" class="reveal">
-            I craft holographic interfaces, neural UX, and cinematic quantum edits. Voice, gesture, and thought-illusion controls available.
+            Cinematic stories, seamless motion, and quantum-level edits.
           </p>
           <div style="margin-top:18px;display:flex;gap:12px;justify-content:center;">
-            <button class="nav-pill" onclick="navTo('portfolio')">Enter Portfolio</button>
-            <button class="nav-pill" onclick="openLink('https://linktr.ee/real1editor')">Galactic Command</button>
+            <button class="nav-pill" onclick="navTo('portfolio')">🎬 Enter Studio</button>
+            <button class="nav-pill" onclick="openLink('https://linktr.ee/real1editor')">🔗 Connect Hub</button>
           </div>
         </div>
       </div>
@@ -277,9 +456,9 @@ nav.floating{ position:fixed; top:18px; right:12px; z-index:70; display:flex; ga
             <div class="holo-divider"></div>
           </div>
           <div class="bio-data reveal">
-            <p>I am a futuristic editor and UI craftsman — Neo-Addis Ababa, blending AI, animation and secure micro-apps to ship immersive web experiences.</p>
+            <p>From rough cuts to polished visuals, I specialize in editing, motion design, and storytelling that connect with audiences.</p>
             <div class="data-stats" style="margin-top:18px;display:flex;gap:24px;align-items:center;">
-              <div class="stat"><div class="stat-value">3045</div><div class="stat-label">Era</div></div>
+              <div class="stat"><div class="stat-value">2030</div><div class="stat-label">Era</div></div>
               <div class="stat"><div class="stat-value">∞</div><div class="stat-label">Creativity</div></div>
               <div class="stat"><div class="stat-value">24/7</div><div class="stat-label">Broadcasts</div></div>
             </div>
@@ -302,55 +481,56 @@ nav.floating{ position:fixed; top:18px; right:12px; z-index:70; display:flex; ga
           <div class="skills-orb" id="skillsOrb" aria-hidden="false">
             <div class="skill-node" data-index="0">
               <div class="node-core"></div>
-              <div class="skill-name">Quantum UI</div>
+              <div class="skill-name">Cinematic Editing</div>
             </div>
             <div class="skill-node" data-index="1">
               <div class="node-core"></div>
-              <div class="skill-name">Neural Interfaces</div>
+              <div class="skill-name">Color Grading</div>
             </div>
             <div class="skill-node" data-index="2">
               <div class="node-core"></div>
-              <div class="skill-name">Holo Animation</div>
+              <div class="skill-name">Motion Graphics</div>
             </div>
             <div class="skill-node" data-index="3">
               <div class="node-core"></div>
-              <div class="skill-name">Telegram Apps</div>
+              <div class="skill-name">Sound Design</div>
             </div>
             <div class="skill-node" data-index="4">
               <div class="node-core"></div>
-              <div class="skill-name">AI Content</div>
+              <div class="skill-name">Visual Effects (VFX)</div>
             </div>
           </div>
+          
 
           <div class="skill-details">
             <div id="detail0" class="detail-panel active">
-              <h3>Quantum UI Design</h3>
-              <p>Designing minimal holographic interfaces with fluid motion, context-aware reveals, and secure portals.</p>
-              <div class="tech-tags"><span class="tech-tag">HoloCSS</span><span class="tech-tag">Framer</span><span class="tech-tag">SVG</span></div>
+              <h3>Cinematic Editing</h3>
+              <p>Crafting seamless cuts, storytelling flow, and dynamic pacing that transform raw footage into cinematic experiences.</p>
+              <div class="tech-tags"><span class="tech-tag">Premiere Pro</span><span class="tech-tag"> · CapCut Pro</span><span class="tech-tag"> · DaVinci Resolve</span></div>
             </div>
 
             <div id="detail1" class="detail-panel">
-              <h3>Neural Interfaces</h3>
-              <p>Mapping cursor intent, idle-state pulses, and thought-illusion interactions to create convincing neural UX.</p>
-              <div class="tech-tags"><span class="tech-tag">Web Speech</span><span class="tech-tag">Sensors</span><span class="tech-tag">Motion</span></div>
+              <h3>Color Grading</h3>
+              <p>Balancing tones, enhancing mood, and creating cinematic palettes that bring depth and emotion to every scene.</p>
+              <div class="tech-tags"><span class="tech-tag">DaVinci Resolve</span><span class="tech-tag"> · Lumetri</span><span class="tech-tag"> · LUTs</span></div>
             </div>
 
             <div id="detail2" class="detail-panel">
-              <h3>Holographic Animation</h3>
-              <p>Smooth spring physics, neon-glass materials, and layered particle systems for cinematic motion design.</p>
-              <div class="tech-tags"><span class="tech-tag">GSAP</span><span class="tech-tag">Framer Motion</span></div>
+              <h3>Motion Graphics</h3>
+              <p>Designing titles, lower thirds, and smooth animations to make stories more engaging and professional.</p>
+              <div class="tech-tags"><span class="tech-tag">After Effects</span><span class="tech-tag"> · Motion</span> <span class="tech-tags"><span class="tech-tag"> · Templates</span></div>
             </div>
 
             <div id="detail3" class="detail-panel">
-              <h3>Telegram Mini Apps</h3>
-              <p>Build small, deployable WebApps that integrate with Telegram's WebApp SDK and serverless webhooks.</p>
-              <div class="tech-tags"><span class="tech-tag">WebApp</span><span class="tech-tag">Serverless</span></div>
+              <h3>Sound Design</h3>
+              <p>Editing dialogue, adding effects, and mixing soundtracks for a polished, immersive audiovisual experience.</p>
+              <div class="tech-tags"><span class="tech-tag">Audition</span><span class="tech-tag"> · Pro Tools</span><span class="tech-tags"><span class="tech-tag"> · SFX Libraries</span></div>
             </div>
 
             <div id="detail4" class="detail-panel">
-              <h3>AI Content</h3>
-              <p>AI-driven copy, auto-captions, and contextual content generation tuned for voice-first experiences.</p>
-              <div class="tech-tags"><span class="tech-tag">LLMs</span><span class="tech-tag">TTS</span></div>
+              <h3>Visual Effects (VFX)</h3>
+              <p>Compositing, masking, and integrating effects that elevate footage with creative and futuristic visuals.</p>
+              <div class="tech-tags"><span class="tech-tag">After Effects</span><span class="tech-tag"> · Mocha</span><span class="tech-tags"><span class="tech-tag"> · Blender</span></div>
             </div>
           </div>
         </div>
@@ -496,16 +676,25 @@ nav.floating{ position:fixed; top:18px; right:12px; z-index:70; display:flex; ga
             <button class="transmit-btn secondary" onclick="transmit('feedback', document.getElementById('feedbackPad') || this)">Send Feedback</button>
           </div>
         </div>
-
+       
+        
         <div style="margin-top:18px" class="reveal">
-          <div class="newsletter-holo">
-            <p>Join the Galactic Newsletter — occasional dispatches from the edit suite.</p>
+          <div class="newsletter-holo"> <br>
+          <h3>Quantum Edit Newsletter</h3>
+            <p>Join for <b>free</b> — cinematic updates & pro editing insights.</p> 
             <div class="newsletter-form" style="justify-content:center">
               <div class="holo-input"><input id="n_email" type="email" placeholder="you@domain.com" required></div>
-              <button class="transmit-btn" onclick="transmit('subscribe', document.getElementById('newsletterForm') || this)">Subscribe</button>
+              <div><button class="transmit-btn" onclick="transmit('subscribe', document.getElementById('newsletterForm') || this)">Subscribe</button> </div>
             </div>
-            <div style="margin-top:12px">
-              <button class="nav-pill" onclick="openLink('https://linktr.ee/real1editor')">Galactic Command Center</button>
+            </div>
+            <div style="margin-top:29px" class="reveal">
+          <div class="newsletter-holo">
+            <div class="newsletter-form" style="justify-content:center">
+            </div>
+            <h3>Connect & Collaborate</h3>
+            <div style="margin-top:7px">
+              <button class="nav-pill" onclick="openLink('https://linktr.ee/real1editor')">🔗 Collab Portal 🔗</button>
+              
             </div>
           </div>
         </div>
@@ -518,14 +707,43 @@ nav.floating{ position:fixed; top:18px; right:12px; z-index:70; display:flex; ga
   <section class="section">
     <div class="container">
       <div class="holo-card" style="text-align:center">
-        <p style="color:var(--muted)">Neo-Addis Ababa • 3045 vibe — <a href="mailto:real1editor@gmail.com" style="color:var(--primary-holo)">AI-Mail</a> • <a href="https://linktr.ee/real1editor" style="color:var(--primary-holo)">Linktree</a></p>
+        <p style="color:var(--muted)"> &copy; 2023 Real1Editor. All rights reserved.</p>
       </div>
     </div>
   </section>
-
+  
 </main>
 
 <script>
+/* NEW: Intro Section Functions */
+function hideIntro() {
+    const introSection = document.getElementById('intro-section');
+    if (introSection) {
+        introSection.classList.add('hidden');
+        // Add a small delay before removing from DOM to allow animation
+        setTimeout(() => {
+            introSection.style.display = 'none';
+        }, 1000);
+    }
+}
+
+// Show intro on page load
+window.addEventListener('load', () => {
+    // First hide neural loader
+    setTimeout(() => {
+        document.getElementById('neural-loader').classList.add('hidden');
+        
+        // Then show intro section
+        const introSection = document.getElementById('intro-section');
+        if (introSection) {
+            introSection.style.display = 'flex';
+            setTimeout(() => {
+                introSection.classList.remove('hidden');
+            }, 100);
+        }
+    }, 2000); // Match your neural loader timing
+});
+
 /* ===========================
    Initialization & helpers
    =========================== */
@@ -536,12 +754,14 @@ const IN_TELEGRAM = !!tgw;
 if(IN_TELEGRAM){ try{ tgw.ready(); tgw.expand(); }catch(e){} }
 
 /* Hide neural loader after page ready (simulate short boot) */
-window.addEventListener('load', ()=> {
-  setTimeout(()=>{ document.getElementById('neural-loader').classList.add('hidden') }, 1000);
-});
+// Moved to intro section handling above
 
 /* Navigation helpers */
-function navTo(id){ document.getElementById(id)?.scrollIntoView({behavior:'smooth'}) }
+function navTo(id){ 
+    // Hide intro if it's still visible
+    hideIntro();
+    document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+}
 function openLink(url){ try{ if(IN_TELEGRAM && tgw.openTelegramLink) return tgw.openTelegramLink(url); }catch(e){} window.open(url,'_blank') }
 function openProject(url){ window.open(url,'_blank') }
 
